@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'Root',
-    database: 'stardisk_db'
+    database: 'stardisk'
 
 })
 
