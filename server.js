@@ -1,1 +1,1 @@
-const a = b
+const a = 0
