@@ -1,4 +1,4 @@
-const connection = require("../db/connection");
+const connection = require("../database/connection");
 
 function index(req, res){
   const sql = "SELECT * from products";
