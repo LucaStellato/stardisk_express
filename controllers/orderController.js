@@ -17,7 +17,10 @@ function store(req, res) {
     const { mail, name, surname, address, card_number, total_price, free_shipment } = req.body;
 
     const sql = 'INSERT INTO orders (mail, name, surname, address, card_number, total_price, free_shipment) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    connection.query(sql, [mail, name, surname, address, card_number, total_price, free_shipment], (err, results) => {
+
+    const array = [mail, name, surname, address, card_number, total_price, free_shipment]
+
+    connection.query(sql, array, (err, results) => {
         if (err) return res.status(500).json({ error: err.message })
         res.status(201).json({ message: 'Ordine creato!' })
 
