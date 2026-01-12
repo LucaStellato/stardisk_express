@@ -6,6 +6,7 @@ const cors = require("cors");
 
 // Routes
 const productsRouter = require("./routes/products");
+const ordersRouter = require('./routes/orders')
 
 // Middlewares
 const notFound = require("./middlewares/notFound");
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products", productsRouter);
+app.use("/api/order", ordersRouter);
 
 app.use(serverError);
 
