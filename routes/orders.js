@@ -2,8 +2,11 @@ const express = require('express');
 const router = express.Router();
 const orderController = require('../controllers/orderController')
 
-//store
 
+//show
+router.get('/:id', orderController.show);
+
+//store
 router.post('/', orderController.store);
 
 
