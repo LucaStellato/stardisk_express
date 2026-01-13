@@ -16,10 +16,10 @@ function index(req, res) {
 }
 
 function show(req, res) {
-  const id = Number(req.params.id);
-  const sql = "SELECT products.id AS product_id, products.name AS name, products.full_price, products.discount, products.amount, products.img_url, products.category, products.brand, products.color, products.rpm, products.release_year, products.description, artists.name AS artist_name, artists.description AS artist_description, artists.record_label, genres.name as genre_name FROM products LEFT JOIN artists ON artists.id = products.id_artist LEFT JOIN product_genres ON product_genres.id_product = products.id LEFT JOIN genres ON genres.id = product_genres.id_genre WHERE products.id = ?";
+  const slug = req.params.slug;
+  const sql = "SELECT products.id AS product_id, products.name AS name, products.full_price, products.discount, products.amount, products.img_url, products.category, products.brand, products.color, products.rpm, products.release_year, products.description, artists.name AS artist_name, artists.description AS artist_description, artists.record_label, genres.name as genre_name FROM products LEFT JOIN artists ON artists.id = products.id_artist LEFT JOIN product_genres ON product_genres.id_product = products.id LEFT JOIN genres ON genres.id = product_genres.id_genre WHERE products.slug = ?";
 
-  connection.query(sql, [id], (err, results) => {
+  connection.query(sql, [slug], (err, results) => {
     if (err) {
       return res.status(500).json({
         error: true,
