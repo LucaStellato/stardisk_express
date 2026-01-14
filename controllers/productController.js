@@ -82,17 +82,17 @@ function show(req, res) {
 function related(req, res) {
   const slug = req.params.slug;
   const sql = `
-    SELECT DISTINCT p.*
-    FROM products p
-    JOIN product_genres pg ON p.id = pg.id_product
-    WHERE pg.id_genre IN (
-      SELECT pg2.id_genre
-      FROM products p2
-      JOIN product_genres pg2 ON p2.id = pg2.id_product
-      WHERE p2.slug = ?
+    SELECT DISTINCT products.*
+    FROM products
+    JOIN product_genres ON products.id = product_genres.id_product
+    WHERE product_genres.id_genre IN (
+      SELECT product_genres.id_genre
+      FROM products
+      JOIN product_genres ON products.id = product_genres.id_product
+      WHERE products.slug = ?
     )
-    AND p.slug != ?
-    AND p.category = 'vinyl'
+    AND products.slug != ?
+    AND products.category = 'vinyl'
     LIMIT 3
   `;
 
