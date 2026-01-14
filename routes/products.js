@@ -9,6 +9,11 @@ router.get("/", productController.index);
 // /api/products/:id
 router.get("/:slug", productController.show);
 
+// /api/artist
 router.get("/:slug/artist", productController.showArtist);
+
+//related products
+router.get('/:slug/related', productController.related);
+
 
 module.exports = router;

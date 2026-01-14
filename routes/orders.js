@@ -10,6 +10,4 @@ router.get('/:id', orderController.show);
 router.post('/', orderController.store);
 
 
-
-
 module.exports = router
