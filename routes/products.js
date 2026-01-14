@@ -10,7 +10,7 @@ router.get("/", productController.index);
 router.get("/:slug", productController.show);
 
 //related products
-router.get('/:id/related', productController.related)
+router.get('/:slug/related', productController.related)
 
 
 module.exports = router;
