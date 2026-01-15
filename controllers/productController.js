@@ -129,9 +129,31 @@ function related(req, res) {
   });
 }
 
+function search(req, res){
+  const { query } = req.query;
+
+  if(!query || query.length <= 2){
+    return res.json({message: "Enter more than 2 characters"})
+  }
+
+  const sql = "SELECT DISTINCT products.name AS name, products.slug, products.img_url, products.full_price, artists.name AS artist_name FROM products LEFT JOIN artists ON products.id_artist = artists.id WHERE products.name LIKE ?";
+
+  const searchTerm = `%${query}%`;
+
+  connection.query(sql, [searchTerm], (err, results) => {
+    if(err) return res.status(500).json({
+      error: true,
+      message: err.message
+    });
+
+    res.json(results);
+  })
+}
+
 module.exports = {
   index,
   show,
   related,
-  showArtist
+  showArtist,
+  search
 }

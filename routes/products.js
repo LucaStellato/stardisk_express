@@ -6,6 +6,8 @@ const productController = require("../controllers/productController")
 // /api/products
 router.get("/", productController.index);
 
+router.get("/search", productController.search);
+
 // /api/products/:id
 router.get("/:slug", productController.show);
 
