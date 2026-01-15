@@ -130,24 +130,63 @@ function related(req, res) {
 }
 
 function search(req, res){
-  const { query } = req.query;
+  const { query, sort } = req.query;
+  
+  let orderBy;
+  switch(sort){
+    case "price_asc":
+      orderBy = "final_price ASC";
+      break;
+    case "price_desc":
+      orderBy = "final_price DESC";
+      break;
+    case "name_asc":
+      orderBy = "products.name ASC";
+      break;
+    case "name_desc":
+      orderBy = "products.name DESC";
+      break;
+    default:
+      orderBy = "products.name ASC";
+}
 
-  if(!query || query.length <= 2){
-    return res.json({message: "Enter more than 2 characters"})
+  let sql = `
+    SELECT DISTINCT
+      products.name AS name,
+      products.slug,
+      products.img_url,
+      products.full_price,
+      products.category,
+      artists.name AS artist_name,
+      genres.name AS genre_name,
+      ROUND(products.full_price - (products.full_price * IFNULL(products.discount, 0) / 100), 2) AS final_price
+    FROM products
+    LEFT JOIN artists ON products.id_artist = artists.id
+    LEFT JOIN product_genres ON product_genres.id_product = products.id
+    LEFT JOIN genres ON genres.id = product_genres.id_genre
+  `;
+
+  const params = [];
+
+  // Filtro SOLO se query è presente e valida
+  if (query && query.length > 2) {
+    sql += "WHERE products.name LIKE ? OR genres.name LIKE ?";
+    const searchTerm = `%${query}%`;
+    params.push(searchTerm, searchTerm);
   }
 
-  const sql = "SELECT DISTINCT products.name AS name, products.slug, products.img_url, products.full_price, products.category, artists.name AS artist_name, genres.name AS genre_name FROM products LEFT JOIN artists ON products.id_artist = artists.id LEFT JOIN product_genres ON product_genres.id_product = products.id LEFT JOIN genres ON genres.id = product_genres.id_genre WHERE products.name LIKE ? OR genres.name LIKE ?";
-  
-  const searchTerm = `%${query}%`;
+  sql += ` ORDER BY ${orderBy};`;
 
-  connection.query(sql, [searchTerm, searchTerm], (err, results) => {
-    if(err) return res.status(500).json({
-      error: true,
-      message: err.message
-    });
+  connection.query(sql, params, (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        error: true,
+        message: err.message
+      });
+    }
 
     res.json(results);
-  })
+  });
 }
 
 module.exports = {
