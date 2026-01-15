@@ -1,5 +1,9 @@
 const connection = require('../database/connection')
 
+function emailIsValid(mail){
+    return /^[^\s@]+@[^\s@]+$/.test(mail)
+}
+
 //show
 function show(req, res) {
     const id = Number(req.params.id);
@@ -14,14 +18,15 @@ function show(req, res) {
 
 //store
 function store(req, res) {
-    const { mail, name, surname, address, card_number, total_price, free_shipment } = req.body;
+    const { mail, name, surname, address, total_price, free_shipment } = req.body;
 
-    const sql = 'INSERT INTO orders (mail, name, surname, address, card_number, total_price, free_shipment) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    const sql = 'INSERT INTO orders (mail, name, surname, address, total_price, free_shipment) VALUES (?, ?, ?, ?, ?, ?)'
 
-    const array = [mail, name, surname, address, card_number, total_price, free_shipment]
+    const array = [mail, name, surname, address, total_price, free_shipment]
 
     connection.query(sql, array, (err, results) => {
         if (err) return res.status(500).json({ error: err.message })
+        if(!emailIsValid(mail)) return res.status(422).json({ message: "Wrong email input"})
         res.status(201).json({ message: 'Ordine creato!' })
 
     })
