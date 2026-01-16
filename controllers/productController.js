@@ -1,6 +1,6 @@
 const connection = require("../database/connection");
 
-// Index
+// Index products
 function index(req, res) {
   const sql = `SELECT 
   products.id AS product_id, 
@@ -34,7 +34,7 @@ function index(req, res) {
   })
 }
 
-// Show
+// Show product
 function show(req, res) {
   const slug = req.params.slug;
   const sql = `SELECT 
@@ -78,6 +78,7 @@ function show(req, res) {
   });
 }
 
+// Show artist
 function showArtist(req, res) {
   const slug = req.params.slug;
   const sql = `SELECT artists.* FROM artists LEFT JOIN products ON products.id_artist = artists.id WHERE products.slug = ?`;
@@ -129,6 +130,7 @@ function related(req, res) {
   });
 }
 
+// Search and sort
 function search(req, res){
   const { query, sort } = req.query;
   
