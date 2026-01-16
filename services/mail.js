@@ -1,0 +1,47 @@
+const transporter = require('../configs/mailConfiguration')
+
+
+function invioOrdineConferma(orderData) {
+
+    const { mail, name, orderID, total_price, products } = orderData
+    console.log(products);
+    const productList = products
+        .map(product => `${product?.name} x ${product?.quantity}`)
+        .join("\n");
+
+
+
+
+    // Configure the mailoptions object
+    const mailOptions = {
+        from: "info@mailtrap.club",
+        to: mail,
+        subject: 'Conferma ordine ricevuto!',
+        text: `Ciao ${name}, grazie per il tuo ordine!
+        Numero ordine: ${orderID}
+        Totale: €${total_price}
+        Prodotti acquistati:${productList}
+        A presto!`
+
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log('Error:', error);
+        } else {
+            console.log('Email sent:', info.response);
+        }
+    });
+}
+
+module.exports = { invioOrdineConferma }
+
+
+
+
+
+
+
+
+

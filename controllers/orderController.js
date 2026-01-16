@@ -1,4 +1,5 @@
 const connection = require('../database/connection')
+const confirmedEmail = require('../services/mail')
 
 function emailIsValid(mail) {
     return /^[^\s@]+@[^\s@]+$/.test(mail)
@@ -43,10 +44,14 @@ function store(req, res) {
             if (err) {
                 return res.status(500).json({ error: err.message });
             }
+            confirmedEmail.invioOrdineConferma({ mail, name, orderID, total_price, products });
 
         })
+
         res.status(201).json({ success: true, order_id: orderID });
+
     })
+
 }
 
 module.exports = {
