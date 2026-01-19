@@ -7,7 +7,7 @@ const cors = require("cors");
 // Routes
 const productsRouter = require("./routes/products");
 const ordersRouter = require('./routes/orders')
-/* const artistRouter = require("./routes/artists"); */
+const artistRouter = require("./routes/artists");
 
 // Middlewares
 const notFound = require("./middlewares/notFound");
@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productsRouter);
 app.use("/api/order", ordersRouter);
-/* app.use("/api/artist", artistRouter); */
+app.use("/api/artist", artistRouter);
 
 app.use(serverError);
 
