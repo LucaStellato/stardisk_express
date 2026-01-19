@@ -78,28 +78,6 @@ function show(req, res) {
   });
 }
 
-// Show artist
-function showArtist(req, res) {
-  const slug = req.params.slug;
-  const sql = `SELECT artists.* FROM artists LEFT JOIN products ON products.id_artist = artists.id WHERE products.slug = ?`;
-
-  connection.query(sql, [slug], (err, results) => {
-    if (err) return res.satus(500).json({
-      error: true,
-      message: err.message
-    })
-
-    if (results.length === 0) {
-      return res.status(404).json({
-        error: true,
-        message: "Product not found"
-      })
-    }
-
-    res.json(results);
-  })
-}
-
 // Related
 function related(req, res) {
   const slug = req.params.slug;
@@ -195,6 +173,5 @@ module.exports = {
   index,
   show,
   related,
-  showArtist,
   search
 }
