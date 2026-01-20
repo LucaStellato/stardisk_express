@@ -35,7 +35,26 @@ function invioOrdineConferma(orderData) {
     });
 }
 
-module.exports = { invioOrdineConferma }
+function welcomeMail(mail) {
+
+    const popMail = {
+        from: "info@mailtrap.club",
+        to: mail,
+        subject: 'Benvenuto in StarDisk!',
+        text: 'Ti ringraziamo per aver visitato il nostro sito!'
+    }
+
+    transporter.sendMail(popMail, function (error, info) {
+        if (error) {
+            console.log('Error:', error);
+        } else {
+            console.log('Email sent:', info.response);
+        }
+    })
+
+}
+
+module.exports = { invioOrdineConferma, welcomeMail }
 
 
 

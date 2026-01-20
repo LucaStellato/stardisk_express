@@ -8,10 +8,14 @@ const cors = require("cors");
 const productsRouter = require("./routes/products");
 const ordersRouter = require('./routes/orders')
 const artistRouter = require("./routes/artists");
+const mailRouter = require("./routes/testMail")
 
 // Middlewares
 const notFound = require("./middlewares/notFound");
 const serverError = require("./middlewares/serverError");
+
+//welcome Mail
+const welcomeMail = require("./services/mail")
 
 // CORS policy
 app.use(cors({
@@ -32,9 +36,11 @@ app.get("/", (req, res) => {
   res.send("Stardisk API Server");
 });
 
+app.use("/api", mailRouter)
 app.use("/api/products", productsRouter);
 app.use("/api/order", ordersRouter);
 app.use("/api/artist", artistRouter);
+
 
 app.use(serverError);
 
