@@ -17,12 +17,46 @@ function invioOrdineConferma(orderData) {
         from: "info@mailtrap.club",
         to: mail,
         subject: 'Conferma ordine ricevuto!',
-        text: `Ciao ${name}, grazie per il tuo ordine!
+        text: `
+        Ciao ${name}, grazie per il tuo ordine!
         Numero ordine: ${orderID}
         Totale: €${total_price}
-        Prodotti acquistati:${productList}
+        Prodotti acquistati: ${productList}
         A presto!`
 
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log('Error:', error);
+        } else {
+            console.log('Email sent:', info.response);
+        }
+    });
+}
+
+function vendorConfirmOrder(orderData) {
+
+    const { mail, surname, name, address, orderID, total_price, products } = orderData
+    const productList = products
+        .map(product => `${product?.name} x ${product?.quantity}`)
+        .join("\n");
+
+
+
+
+    // Configure the mailoptions object
+    const mailOptions = {
+        from: "info@mailtrap.club",
+        to: "info@mailtrap.club",
+        subject: 'Nuovo ordine ricevuto!',
+        text: `
+        L'ordine n°${orderID} di ${surname} ${name} è stato ricevuto.
+        Mail cliente: ${mail}
+        Indirizzo: ${address}
+        Totale: €${total_price}
+        Prodotti acquistati: ${productList}`
     };
 
     // Send the email
@@ -54,7 +88,7 @@ function welcomeMail(mail) {
 
 }
 
-module.exports = { invioOrdineConferma, welcomeMail }
+module.exports = { invioOrdineConferma, vendorConfirmOrder, welcomeMail }
 
 
 
