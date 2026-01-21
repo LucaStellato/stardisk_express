@@ -54,6 +54,7 @@ function show(req, res) {
   artists.name AS artist_name, 
   artists.description AS artist_description, 
   artists.record_label, 
+  artists.id AS artist_id,
   genres.name as genre_name 
   FROM products 
   LEFT JOIN artists ON artists.id = products.id_artist 
@@ -110,11 +111,11 @@ function related(req, res) {
 }
 
 // Search and sort
-function search(req, res){
+function search(req, res) {
   const { query, sort } = req.query;
-  
+
   let orderBy;
-  switch(sort){
+  switch (sort) {
     case "price_asc":
       orderBy = "final_price ASC";
       break;
@@ -129,7 +130,7 @@ function search(req, res){
       break;
     default:
       orderBy = "products.name ASC";
-}
+  }
 
   let sql = `
     SELECT DISTINCT

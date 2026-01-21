@@ -2,10 +2,10 @@ const connection = require("../database/connection");
 
 // Show artist
 function showArtist(req, res) {
-const artistId = req.params.id;
+    const artistId = req.params.id;
 
-    const sql = 
-        `SELECT artists.name AS artist, artists.record_label, products.name AS name, products.full_price, products.img_url
+    const sql =
+        `SELECT artists.name AS artist, artists.record_label, artists.id AS artist_id, products.name AS name, products.full_price, products.img_url
         FROM artists
         INNER JOIN products ON artists.id = products.id_artist
         WHERE artists.id = ? AND products.category = 'vinyl'`;
