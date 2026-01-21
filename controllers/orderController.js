@@ -45,6 +45,8 @@ function store(req, res) {
                 return res.status(500).json({ error: err.message });
             }
             confirmedEmail.invioOrdineConferma({ mail, name, orderID, total_price, products });
+            setTimeout(() => { 
+                confirmedEmail.vendorConfirmOrder({ mail, surname, name, address, orderID, total_price, products})}, 15000)
 
         })
 
