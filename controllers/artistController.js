@@ -5,7 +5,7 @@ function showArtist(req, res) {
     const artistId = req.params.id;
 
     const sql =
-        `SELECT artists.name AS artist, artists.record_label, artists.id AS artist_id, products.name AS name, products.full_price, products.img_url
+        `SELECT artists.name AS artist, artists.record_label, artists.img_url AS artist_img, artists.id AS artist_id, products.name AS name, products.full_price, products.img_url
         FROM artists
         INNER JOIN products ON artists.id = products.id_artist
         WHERE artists.id = ? AND products.category = 'vinyl'`;
@@ -20,6 +20,7 @@ function showArtist(req, res) {
         const artist = {
             name: results[0].artist,
             record_label: results[0].record_label,
+            artist_img: results[0].artist_img,
             vinyls: []
         };
 
