@@ -20,3 +20,11 @@
 - Moderno(struttura)/Vintage(Font, palette di colori, elementi visivi)
 - Passione
 - Coinvolgente/curiosità (descrizioni approfondite)
+
+
+
+welcomepopup homepage co(NI)glione
+detailpage artistpage tod
+vinylspage aboutuspage  vecchio
+wishlistpage cartpage stellina
+checkoutpage 404page successpage responsive mac
