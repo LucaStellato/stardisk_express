@@ -5,7 +5,7 @@ function showArtist(req, res) {
     const artistId = req.params.id;
 
     const sql =
-        `SELECT artists.name AS artist, artists.record_label, artists.img_url AS artist_img, artists.description AS artist_description, artists.id AS artist_id, products.name AS name, products.full_price, products.img_url
+        `SELECT artists.name AS artist, artists.record_label, artists.img_url AS artist_img, artists.description AS artist_description, artists.id AS artist_id, products.name AS name, products.full_price, products.img_url, products.slug
         FROM artists
         INNER JOIN products ON artists.id = products.id_artist
         WHERE artists.id = ? AND products.category = 'vinyl'`;
@@ -30,7 +30,8 @@ function showArtist(req, res) {
             const disk = {
                 name: results[i].name,
                 price: results[i].full_price,
-                image: results[i].img_url
+                image: results[i].img_url,
+                slug: results[i].slug
             };
 
             // Aggiungiamo il disco nell'array dell'artista
