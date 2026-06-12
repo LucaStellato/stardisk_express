@@ -22,8 +22,9 @@
   "homepage": "https://github.com/LucaStellato/stardisk_express#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mysql2": "^3.16.0",
-    "nodemailer": "^7.0.12"
+    "nodemailer": "^8.0.11"
   }
 }
